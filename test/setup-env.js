@@ -1,5 +1,5 @@
 /*
- * Copyright 2019 Adobe. All rights reserved.
+ * Copyright 2021 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License. You may obtain a copy
  * of the License at http://www.apache.org/licenses/LICENSE-2.0
@@ -9,17 +9,8 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
-
-/* eslint-env mocha */
-
-import assert from 'assert';
-import { Request } from '@adobe/helix-universal';
-
-import { main } from '../src/index.js';
-
-describe('Index Tests', () => {
-  it('index function is present', async () => {
-    const result = await main(new Request('https://localhost/'), { log: console, env: {} });
-    assert.strictEqual(await result.text(), 'Hello, world.');
-  });
-});
+// eslint-disable-next-line no-console
+console.log('Forcing HTTP/1.1 for Helix-Fetch');
+process.env.HELIX_FETCH_FORCE_HTTP1 = 'true';
+process.env.HELIX_ONEDRIVE_LOCAL_AUTH_CACHE = 'true';
+process.env.HELIX_ONEDRIVE_NO_SHARE_LINK_CACHE = 'true';
