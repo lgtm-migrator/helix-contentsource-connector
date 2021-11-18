@@ -1,0 +1,74 @@
+{
+  "name": "@adobe/helix-contentsource-connector",
+  "version": "1.4.9",
+  "private": true,
+  "description": "Helix ContentSource Connector",
+  "main": "src/index.js",
+  "scripts": {
+    "test": " nyc --reporter=text --reporter=lcov --check-coverage --branches 100 --statements 100 --lines 100 mocha  -i -g 'Post-Deploy'",
+    "test-ci": "nyc --reporter=text --reporter=lcov --check-coverage --branches 100 --statements 100 --lines 100 mocha  -i -g 'Post-Deploy' --reporter xunit --reporter-options output=./junit/test-results.xml && codecov",
+    "test-postdeploy": "mocha --reporter xunit --reporter-options output=./junit/test-results.xml -g 'Post-Deploy'",
+    "lint": "./node_modules/.bin/eslint .",
+    "semantic-release": "semantic-release",
+    "docs": "npx jsdoc2md -c .jsdoc.json --files 'src/*.js'  > docs/API.md",
+    "commit": "git-cz",
+    "build": "hedy -v",
+    "deploy": "hedy -v --deploy --test=/_status_check/healthcheck.json",
+    "deploy-sequences": "hedy --no-build -no-hints -l major -l minor --cleanup-patch 1w --cleanup-minor 1m --cleanup-major 1y",
+    "deploy-ci": "hedy -v --deploy --test --pkgVersion=ci$CIRCLE_BUILD_NUM -l ci --cleanup-ci 24h"
+  },
+  "wsk": {
+    "name": "helix-services/contentsource-connector@${version}",
+    "memory": 256
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adobe/helix-contentsource-connector"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/adobe/helix-contentsource-connector/issues"
+  },
+  "homepage": "https://github.com/adobe/helix-contentsource-connector#readme",
+  "dependencies": {
+    "@adobe/helix-shared-wrap": "1.0.0",
+    "@adobe/helix-status": "9.2.4",
+    "@adobe/helix-universal": "1.9.0",
+    "@adobe/helix-universal-logger": "2.0.0"
+  },
+  "devDependencies": {
+    "@adobe/eslint-config-helix": "1.3.0",
+    "@adobe/helix-deploy": "4.12.2",
+    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/exec": "6.0.2",
+    "@semantic-release/git": "10.0.1",
+    "chai": "4.3.4",
+    "chai-http": "4.3.0",
+    "codecov": "3.8.3",
+    "commitizen": "4.2.4",
+    "cz-conventional-changelog": "3.3.0",
+    "dotenv": "10.0.0",
+    "eslint": "8.2.0",
+    "eslint-plugin-header": "3.1.1",
+    "eslint-plugin-import": "2.25.2",
+    "jsdoc-to-markdown": "7.1.0",
+    "junit-report-builder": "3.0.0",
+    "lint-staged": "11.2.6",
+    "mocha": "9.1.3",
+    "nyc": "15.1.0",
+    "proxyquire": "2.1.3",
+    "semantic-release": "18.0.0"
+  },
+  "lint-staged": {
+    "*.js": "eslint"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-conventional-changelog"
+    },
+    "ghooks": {
+      "pre-commit": "npx lint-staged"
+    }
+  }
+}
