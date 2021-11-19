@@ -22,13 +22,12 @@ const { expect } = chai;
 
 createTargets().forEach((target) => {
   describe(`Post-Deploy Tests (${target.title()})`, () => {
-    it('Purge a blog post', async () => {
+    it('Retrieve the status', async () => {
       await chai
         .request(target.host())
-        .get(target.urlPath())
+        .get(`${target.urlPath()}/_status_check/healthcheck.json`)
         .then((response) => {
           expect(response).to.have.status(200);
-          expect.fail('Not ready yet');
         }).catch((e) => {
           throw e;
         });
