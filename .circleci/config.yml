@@ -74,7 +74,7 @@ jobs:
       # see https://circleci.com/orbs/registry/orb/adobe/helix-post-deploy
       # for more available parameters
       - helix-post-deploy/monitoring:
-          targets: universal, aws
+          targets: aws
           statuspage_name: Helix ContentSource Connector
           statuspage_group: Publishing
           newrelic_group_policy: Publishing Repeated Failure

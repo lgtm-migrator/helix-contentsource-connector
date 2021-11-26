@@ -12,11 +12,6 @@
 import assert from 'assert';
 import nock from 'nock';
 
-const FSTAB = `
-mountpoints:
-  /: https://drive.google.com/drive/u/2/folders/1vjng4ahZWph-9oeaMae16P9Kbb3xg4Cg
-`;
-
 export function Nock() {
   const DEFAULT_AUTH = {
     token_type: 'Bearer',
@@ -47,20 +42,39 @@ export function Nock() {
   }
 
   nocker.done = () => {
-    Object.values(scopes).forEach((s) => s.done());
     if (unmatched) {
-      assert.deepStrictEqual(unmatched.map((req) => req.options || req), []);
       nock.emitter.off('no match', noMatchHandler);
+      assert.deepStrictEqual(unmatched.map((req) => {
+        // eslint-disable-next-line no-param-reassign
+        req = req.options || req;
+        return `${req.method} https://${req.hostname}${req.path}`;
+      }), []);
     }
+    Object.values(scopes).forEach((s) => s.done());
   };
 
-  nocker.fstab = (fstab = FSTAB, owner = 'owner', repo = 'repo', ref = 'ref') => nocker('https://helix-code-bus.s3.us-east-1.amazonaws.com')
+  nocker.fstab = (fstab, owner = 'owner', repo = 'repo', ref = 'ref') => nocker('https://helix-code-bus.s3.us-east-1.amazonaws.com')
     .get(`/${owner}/${repo}/${ref}/fstab.yaml?x-id=GetObject`)
-    .reply(200, fstab);
+    .reply(fstab ? 200 : 404, fstab);
 
   nocker.loginWindowsNet = (auth = DEFAULT_AUTH) => nocker('https://login.windows.net')
     .post('/common/oauth2/token?api-version=1.0')
     .reply(200, auth);
 
   return nocker;
+}
+
+export function filterProperties(obj, names) {
+  return Object.entries(obj).reduce((prev, [key, value]) => {
+    if (names.indexOf(key) >= 0) {
+      // ignore
+    } else if (typeof value === 'object') {
+      // eslint-disable-next-line no-param-reassign
+      prev[key] = filterProperties(value, names);
+    } else {
+      // eslint-disable-next-line no-param-reassign
+      prev[key] = value;
+    }
+    return prev;
+  }, {});
 }
