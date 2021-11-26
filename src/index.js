@@ -96,20 +96,18 @@ function getOneDriveClient(context, opts) {
   return context.od;
 }
 
-/**
- * Checks if this is requested directly to the api gateway
- * @param {Request} req the request
- * @returns {boolean} if requested directly via api gatewat
- */
-function isDirectAWS(req) {
-  const host = req.headers.get('x-forwarded-host') ?? req.headers.get('host') ?? '';
-  return host.endsWith('.amazonaws.com');
-}
-
 function getRedirectRoot(req, ctx) {
-  return isDirectAWS(req)
-    ? `/${ctx.func.package}/${ctx.func.name}/${ctx.func.version}`
-    : '';
+  const host = req.headers.get('x-forwarded-host') ?? req.headers.get('host') ?? '';
+  // Checks if this is requested via admin.hlx3.page
+  if (host === 'admin.hlx3.page') {
+    return '/register';
+  }
+  //  Checks if this is requested directly to the api gateway
+  if (host.endsWith('.amazonaws.com')) {
+    return `/${ctx.func.package}/${ctx.func.name}/${ctx.func.version}`;
+  }
+  // default (eg local dev)
+  return '';
 }
 
 function getRedirectUrl(req, ctx, path) {
