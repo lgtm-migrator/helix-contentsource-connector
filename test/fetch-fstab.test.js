@@ -54,6 +54,7 @@ describe('fetch-fstab tests', () => {
         '/google-home.md': 'gdrive:1GIItS1y0YXTySslLGqJZUFxwFH1DPlSg3R7ybYY3ATE',
         '/ms': 'https://adobe.sharepoint.com/sites/TheBlog/Shared%20Documents/theblog',
       },
+      folders: {},
     });
   });
 
@@ -93,6 +94,7 @@ describe('fetch-fstab tests', () => {
         '/google-home.md': 'gdrive:1GIItS1y0YXTySslLGqJZUFxwFH1DPlSg3R7ybYY3ATE',
         '/ms': 'https://adobe.sharepoint.com/sites/TheBlog/Shared%20Documents/theblog',
       },
+      folders: {},
     });
   });
 
@@ -117,6 +119,7 @@ describe('fetch-fstab tests', () => {
         '/google-home.md': 'gdrive:1GIItS1y0YXTySslLGqJZUFxwFH1DPlSg3R7ybYY3ATE',
         '/ms': 'https://adobe.sharepoint.com/sites/TheBlog/Shared%20Documents/theblog',
       },
+      folders: {},
     });
   });
 
@@ -143,6 +146,7 @@ describe('fetch-fstab tests', () => {
         '/google-home.md': 'gdrive:1GIItS1y0YXTySslLGqJZUFxwFH1DPlSg3R7ybYY3ATE',
         '/ms': 'https://adobe.sharepoint.com/sites/TheBlog/Shared%20Documents/theblog',
       },
+      folders: {},
     });
   });
 
