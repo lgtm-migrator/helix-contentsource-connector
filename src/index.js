@@ -27,6 +27,8 @@ import fetchFstab from './fetch-fstab.js';
 import S3CachePlugin from './S3CachePlugin.js';
 import GoogleClient from './GoogleClient.js';
 
+const ROOT_PATH = '/register';
+
 const AZURE_SCOPES = [
   'user.read',
   'openid',
@@ -98,16 +100,12 @@ function getOneDriveClient(context, opts) {
 
 function getRedirectRoot(req, ctx) {
   const host = req.headers.get('x-forwarded-host') ?? req.headers.get('host') ?? '';
-  // Checks if this is requested via admin.hlx3.page
-  if (host === 'admin.hlx3.page') {
-    return '/register';
-  }
   //  Checks if this is requested directly to the api gateway
   if (host.endsWith('.amazonaws.com')) {
-    return `/${ctx.func.package}/${ctx.func.name}/${ctx.func.version}`;
+    return `/${ctx.func.package}/${ctx.func.name}/${ctx.func.version}${ROOT_PATH}`;
   }
-  // default (eg local dev)
-  return '';
+  // default
+  return ROOT_PATH;
 }
 
 function getRedirectUrl(req, ctx, path) {
@@ -194,12 +192,11 @@ async function getProjectInfo(request, ctx, { owner, repo }) {
   };
 }
 
-async function serveStatic(request, context) {
-  const { pathInfo: { suffix } } = context;
-  const data = await readFile(resolve('views', `.${suffix}`));
+async function serveStatic(path) {
+  const data = await readFile(resolve('views', `.${path}`));
   return new Response(data, {
     headers: {
-      'content-type': mime.getType(suffix),
+      'content-type': mime.getType(path),
     },
   });
 }
@@ -212,12 +209,19 @@ async function serveStatic(request, context) {
  */
 async function run(request, context) {
   const { log, pathInfo: { suffix }, data } = context;
+  if (!suffix.startsWith(ROOT_PATH)) {
+    return new Response('', {
+      status: 404,
+    });
+  }
+  const path = suffix.substring(ROOT_PATH.length);
+
   // poor mans static handling
-  if (suffix === '/scripts.js' || suffix === '/styles.css') {
-    return serveStatic(request, context);
+  if (path === '/scripts.js' || path === '/styles.css') {
+    return serveStatic(path);
   }
 
-  const [, route, owner, repo] = suffix.split('/');
+  const [, route, owner, repo] = path.split('/');
 
   /* ------------ token ------------------ */
   if (route === 'token') {
