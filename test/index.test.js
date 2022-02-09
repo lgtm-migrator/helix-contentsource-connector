@@ -74,7 +74,7 @@ const RESP_AUTH_DEFAULT = {
   expires_in: 181000,
 };
 
-const DEFAULT_CONTEXT = (suffix = '/', env = {}) => ({
+const DEFAULT_CONTEXT = (suffix = '', env = {}) => ({
   log: console,
   env: {
     AWS_S3_REGION: 'us-east-1',
@@ -83,7 +83,7 @@ const DEFAULT_CONTEXT = (suffix = '/', env = {}) => ({
     ...env,
   },
   pathInfo: {
-    suffix,
+    suffix: `/register${suffix}`,
   },
 });
 
@@ -174,7 +174,7 @@ describe('Index Tests (google)', () => {
     const resp = await main(DEFAULT_REQUEST(), DEFAULT_CONTEXT('/info/owner/repo', {}));
     assert.strictEqual(resp.status, 200);
     const body = await resp.json();
-    assert.strictEqual(body.links.gdLogin, 'https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fspreadsheets%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdocuments&access_type=offline&prompt=consent&state=g%2Fowner%2Frepo&response_type=code&client_id=&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Ftoken');
+    assert.strictEqual(body.links.gdLogin, 'https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fspreadsheets%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdocuments&access_type=offline&prompt=consent&state=g%2Fowner%2Frepo&response_type=code&client_id=&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fregister%2Ftoken');
   });
 
   it('google token endpoint can receive token', async () => {
@@ -210,7 +210,7 @@ describe('Index Tests (google)', () => {
     assert.strictEqual(resp.status, 302);
     assert.deepStrictEqual(resp.headers.plain(), {
       'content-type': 'text/plain; charset=utf-8',
-      location: '/connect/owner/repo',
+      location: '/register/connect/owner/repo',
     });
 
     const data = decrypt('853bced1f82a05e9d27a8f63ecac59e70d9c14680dc5e417429f65e988f', cache).toString('utf-8');
@@ -332,7 +332,7 @@ describe('Index Tests (sharepoint)', () => {
     const body = await resp.json();
     // console.log(body);
     assert.strictEqual(body.mp.url, 'https://adobe.sharepoint.com/sites/TheBlog/Shared%20Documents/theblog');
-    assert.match(body.links.odLogin, /https:\/\/login\.microsoftonline\.com\/fa7b1b5a-7b34-4387-94ae-d2c178decee1\/oauth2\/v2\.0\/authorize\?client_id=client-id&scope=user\.read%20openid%20profile%20offline_access&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Ftoken&client-request-id=[0-9a-f-]+&response_mode=form_post&response_type=code&x-client-SKU=msal\.js\.node&x-client-VER=1\.3\.3&x-client-OS=[^&]+&x-client-CPU=[^&]+&client_info=1&prompt=consent&state=a%2Fowner%2Frepo/);
+    assert.match(body.links.odLogin, /https:\/\/login\.microsoftonline\.com\/fa7b1b5a-7b34-4387-94ae-d2c178decee1\/oauth2\/v2\.0\/authorize\?client_id=client-id&scope=user\.read%20openid%20profile%20offline_access&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fregister%2Ftoken&client-request-id=[0-9a-f-]+&response_mode=form_post&response_type=code&x-client-SKU=msal\.js\.node&x-client-VER=1\.3\.3&x-client-OS=[^&]+&x-client-CPU=[^&]+&client_info=1&prompt=consent&state=a%2Fowner%2Frepo/);
   });
 
   it('sharepoint token endpoint can receive token', async () => {
@@ -372,7 +372,7 @@ describe('Index Tests (sharepoint)', () => {
     assert.strictEqual(resp.status, 302);
     assert.deepStrictEqual(resp.headers.plain(), {
       'content-type': 'text/plain; charset=utf-8',
-      location: '/connect/owner/repo',
+      location: '/register/connect/owner/repo',
     });
 
     const data = decrypt('9b08ed882cc3217ceb23a3e71d769dbe47576312869465a0a302ed29c6d', cache).toString('utf-8');
