@@ -1,6 +1,6 @@
 {
   "name": "@adobe/helix-contentsource-connector",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "private": true,
   "description": "Helix ContentSource Connector",
   "main": "src/index.js",

@@ -1,3 +1,10 @@
+## [1.0.21](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.20...v1.0.21) (2022-02-09)
+
+
+### Bug Fixes
+
+* fix root path ([0168b0d](https://github.com/adobe/helix-contentsource-connector/commit/0168b0d5873f86f1cf9d6c2f935de370f1c840bc))
+
 ## [1.0.20](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.19...v1.0.20) (2022-02-09)
 
 
