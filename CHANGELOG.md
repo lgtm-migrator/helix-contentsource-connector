@@ -1,3 +1,10 @@
+## [1.0.25](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.24...v1.0.25) (2022-02-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-status to v9.2.7 ([d35cf78](https://github.com/adobe/helix-contentsource-connector/commit/d35cf78b37ea91a9aa43e51c49f8b3de958bed03))
+
 ## [1.0.24](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.23...v1.0.24) (2022-02-21)
 
 
