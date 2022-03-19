@@ -307,6 +307,9 @@ describe('Index Tests (sharepoint)', () => {
 
   it('sharepoint github requires client id', async () => {
     nock.fstab(FSTAB_1D, 'owner', 'repo', 'main');
+    nock('https://login.windows.net')
+      .get('/adobe.onmicrosoft.com/.well-known/openid-configuration')
+      .reply(200, RESP_AUTH_WELL_KNOWN);
     const resp = await main(new Request('https://localhost/'), DEFAULT_CONTEXT('/info/owner/repo'));
     assert.strictEqual(resp.status, 200);
     const body = await resp.json();
@@ -323,6 +326,9 @@ describe('Index Tests (sharepoint)', () => {
     nock('https://helix-content-bus.s3.us-east-1.amazonaws.com')
       .get('/9b08ed882cc3217ceb23a3e71d769dbe47576312869465a0a302ed29c6d/.helix-auth?x-id=GetObject')
       .reply(404);
+    nock('https://login.windows.net')
+      .get('/adobe.onmicrosoft.com/.well-known/openid-configuration')
+      .reply(200, RESP_AUTH_WELL_KNOWN);
 
     const resp = await main(DEFAULT_REQUEST(), DEFAULT_CONTEXT('/info/owner/repo', {
       AZURE_WORD2MD_CLIENT_ID: 'client-id',
@@ -332,7 +338,7 @@ describe('Index Tests (sharepoint)', () => {
     const body = await resp.json();
     // console.log(body);
     assert.strictEqual(body.mp.url, 'https://adobe.sharepoint.com/sites/TheBlog/Shared%20Documents/theblog');
-    assert.match(body.links.odLogin, /https:\/\/login\.microsoftonline\.com\/fa7b1b5a-7b34-4387-94ae-d2c178decee1\/oauth2\/v2\.0\/authorize\?client_id=client-id&scope=user\.read%20openid%20profile%20offline_access&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fregister%2Ftoken&client-request-id=[0-9a-f-]+&response_mode=form_post&response_type=code&x-client-SKU=msal\.js\.node&x-client-VER=1\.3\.3&x-client-OS=[^&]+&x-client-CPU=[^&]+&client_info=1&prompt=consent&state=a%2Fowner%2Frepo/);
+    assert.match(body.links.odLogin, /https:\/\/login\.microsoftonline\.com\/fa7b1b5a-7b34-4387-94ae-d2c178decee1\/oauth2\/v2\.0\/authorize\?client_id=client-id&scope=user.read%20openid%20profile%20offline_access%20Files.ReadWrite.All%20Sites.ReadWrite.All%20https%3A%2F%2Fmicrosoft.sharepoint-df.com%2FMyFiles.Read&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fregister%2Ftoken&client-request-id=[0-9a-f-]+&response_mode=form_post&response_type=code&x-client-SKU=msal\.js\.node&x-client-VER=1\.3\.3&x-client-OS=[^&]+&x-client-CPU=[^&]+&client_info=1&prompt=consent&state=a%2Fowner%2Frepo/);
   });
 
   it('sharepoint token endpoint can receive token', async () => {
@@ -353,6 +359,9 @@ describe('Index Tests (sharepoint)', () => {
         cache = Buffer.from(body, 'hex');
         return [201];
       });
+    nock('https://login.windows.net')
+      .get('/adobe.onmicrosoft.com/.well-known/openid-configuration')
+      .reply(200, RESP_AUTH_WELL_KNOWN);
 
     const resp = await main(DEFAULT_REQUEST({
       method: 'POST',
@@ -379,14 +388,14 @@ describe('Index Tests (sharepoint)', () => {
     const json = filterProperties(JSON.parse(data), ['expires_on', 'extended_expires_on', 'cached_at']);
     assert.deepStrictEqual(json, {
       AccessToken: {
-        '-login.windows.net-accesstoken-client-id-fa7b1b5a-7b34-4387-94ae-d2c178decee1-user.read openid profile offline_access': {
+        '-login.windows.net-accesstoken-client-id-fa7b1b5a-7b34-4387-94ae-d2c178decee1-user.read openid profile offline_access files.readwrite.all sites.readwrite.all https://microsoft.sharepoint-df.com/myfiles.read': {
           client_id: 'client-id',
           credential_type: 'AccessToken',
           environment: 'login.windows.net',
           home_account_id: '',
           realm: 'fa7b1b5a-7b34-4387-94ae-d2c178decee1',
           secret: 'dummy',
-          target: 'user.read openid profile offline_access',
+          target: 'user.read openid profile offline_access Files.ReadWrite.All Sites.ReadWrite.All https://microsoft.sharepoint-df.com/MyFiles.Read',
           token_type: 'Bearer',
         },
       },
@@ -423,6 +432,9 @@ describe('Index Tests (sharepoint)', () => {
         cache = Buffer.from(body, 'hex');
         return [201];
       });
+    nock('https://login.windows.net')
+      .get('/adobe.onmicrosoft.com/.well-known/openid-configuration')
+      .reply(200, RESP_AUTH_WELL_KNOWN);
 
     const resp = await main(DEFAULT_REQUEST({
       method: 'POST',
@@ -465,6 +477,9 @@ describe('Index Tests (sharepoint)', () => {
       .reply(200, authData, {
         'content-type': 'application/octet-stream',
       });
+    nock('https://login.windows.net')
+      .get('/adobe.onmicrosoft.com/.well-known/openid-configuration')
+      .reply(200, RESP_AUTH_WELL_KNOWN);
     nock('https://graph.microsoft.com')
       .get('/v1.0/me')
       .reply(200, {

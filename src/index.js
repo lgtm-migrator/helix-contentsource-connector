@@ -14,18 +14,23 @@ import { readFile } from 'fs/promises';
 import { resolve } from 'path';
 import ejs from 'ejs';
 import mime from 'mime';
+import { decodeJwt } from 'jose';
 import { FSCachePlugin, OneDrive } from '@adobe/helix-onedrive-support';
 import { google } from 'googleapis';
 import wrap from '@adobe/helix-shared-wrap';
 import bodyData from '@adobe/helix-shared-body-data';
 import { logger } from '@adobe/helix-universal-logger';
 import { wrap as status } from '@adobe/helix-status';
-import { Response } from '@adobe/helix-fetch';
+import { context as fetchContext, h1, Response } from '@adobe/helix-fetch';
 import MemCachePlugin from './MemCachePlugin.js';
 import pkgJson from './package.cjs';
 import fetchFstab from './fetch-fstab.js';
 import S3CachePlugin from './S3CachePlugin.js';
 import GoogleClient from './GoogleClient.js';
+
+export const { fetch } = process.env.HELIX_FETCH_FORCE_HTTP1
+  /* c8 ignore next */ ? h1()
+  /* c8 ignore next */ : fetchContext();
 
 const ROOT_PATH = '/register';
 
@@ -34,6 +39,9 @@ const AZURE_SCOPES = [
   'openid',
   'profile',
   'offline_access',
+  'Files.ReadWrite.All',
+  'Sites.ReadWrite.All',
+  'https://microsoft.sharepoint-df.com/MyFiles.Read',
 ];
 
 const GOOGLE_SCOPES = [
@@ -76,9 +84,10 @@ function getOneDriveClient(context, opts) {
     const {
       AZURE_WORD2MD_CLIENT_ID: clientId,
       AZURE_WORD2MD_CLIENT_SECRET: clientSecret,
-      AZURE_WORD2MD_TENANT: tenant = 'fa7b1b5a-7b34-4387-94ae-d2c178decee1',
     } = env;
 
+    const tenant = opts.tenantId ?? env.AZURE_WORD2MD_TENANT ?? 'common';
+    log.info(`tenant for auth: ${tenant}`);
     const key = `${contentBusId}/.helix-auth`;
     const base = process.env.AWS_EXECUTION_ENV
       ? new S3CachePlugin(context, { key, secret: contentBusId })
@@ -150,6 +159,8 @@ async function getProjectInfo(request, ctx, { owner, repo }) {
   let contentBusId;
   let githubUrl = '';
   let error = '';
+  let tenantName = '';
+  let tenantId = '';
 
   if (owner && repo) {
     try {
@@ -170,6 +181,19 @@ async function getProjectInfo(request, ctx, { owner, repo }) {
       ctx.log.error('error fetching fstab:', e);
       error = e.message;
     }
+
+    // get tenant for onedrive
+    if (mp?.type === 'onedrive') {
+      const { hostname } = new URL(mp.url);
+      [tenantName] = hostname.split('.');
+      const discovery = await fetch(`https://login.windows.net/${tenantName}.onmicrosoft.com/.well-known/openid-configuration`);
+      if (discovery.ok) {
+        const { issuer } = await discovery.json();
+        if (issuer) {
+          [, tenantId] = new URL(issuer).pathname.split('/');
+        }
+      }
+    }
   }
 
   return {
@@ -178,6 +202,8 @@ async function getProjectInfo(request, ctx, { owner, repo }) {
     mp,
     contentBusId,
     githubUrl,
+    tenantName,
+    tenantId,
     error,
     version: pkgJson.version,
     links: {
@@ -313,10 +339,12 @@ async function run(request, context) {
           const od = getOneDriveClient(context, info);
 
           // check for token
-          if (await od.getAccessToken(true)) {
+          const tokenResponse = await od.getAccessToken(true);
+          if (tokenResponse) {
             const me = await od.me();
             log.info('installed user', me);
             info.me = me;
+            info.jwtPayload = decodeJwt(tokenResponse.accessToken);
           } else {
             // get url to sign user in and consent to scopes needed for application
             info.links.odLogin = await od.app.getAuthCodeUrl({
