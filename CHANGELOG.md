@@ -1,3 +1,10 @@
+## [1.0.43](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.42...v1.0.43) (2022-04-04)
+
+
+### Bug Fixes
+
+* **deps:** update dependency googleapis to v100 ([#91](https://github.com/adobe/helix-contentsource-connector/issues/91)) ([561086c](https://github.com/adobe/helix-contentsource-connector/commit/561086c1725ff01a4c8ead8a6b3997a54ce0231a))
+
 ## [1.0.42](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.41...v1.0.42) (2022-04-02)
 
 
