@@ -1,3 +1,10 @@
+## [1.0.59](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.58...v1.0.59) (2022-05-14)
+
+
+### Bug Fixes
+
+* **deps:** update adobe fixes ([0c564af](https://github.com/adobe/helix-contentsource-connector/commit/0c564afe507935e4a9d6db24bc897f0e1f864d0b))
+
 ## [1.0.58](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.57...v1.0.58) (2022-05-14)
 
 
