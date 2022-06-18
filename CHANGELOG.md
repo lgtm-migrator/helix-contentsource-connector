@@ -1,3 +1,10 @@
+## [1.0.71](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.70...v1.0.71) (2022-06-18)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-shared-config to v8.2.0 ([#143](https://github.com/adobe/helix-contentsource-connector/issues/143)) ([939d23e](https://github.com/adobe/helix-contentsource-connector/commit/939d23ee0b012c020b7c204030d30c4d1b3a9e85))
+
 ## [1.0.70](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.69...v1.0.70) (2022-06-16)
 
 
