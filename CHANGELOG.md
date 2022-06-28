@@ -1,3 +1,10 @@
+## [1.0.75](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.74...v1.0.75) (2022-06-28)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-fetch to v3.1.0 ([2994119](https://github.com/adobe/helix-contentsource-connector/commit/29941199aefd8e0130f131ad3386438ceb164a7b))
+
 ## [1.0.74](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.73...v1.0.74) (2022-06-25)
 
 
