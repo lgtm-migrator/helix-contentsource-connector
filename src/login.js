@@ -98,7 +98,7 @@ export async function redirectToLogin(ctx, info, idp) {
   url.searchParams.append('nonce', crypto.randomUUID());
   url.searchParams.append('state', state);
   url.searchParams.append('redirect_uri', info.links.token);
-  url.searchParams.append('prompt', 'consent');
+  url.searchParams.append('prompt', 'select_account');
 
   log.info('redirecting to login page', url.href);
   return new Response('', {
@@ -119,14 +119,38 @@ export async function redirectToLogin(ctx, info, idp) {
  * @return {Promise<Response>} response
  */
 export async function exchangeToken(ctx, info, idp) {
-  const { log, data } = ctx;
+  const {
+    log,
+    data: {
+      state, code, error, error_subcode: subcode,
+    },
+  } = ctx;
+  const location = `${info.links.connect}/${state.owner}/${state.repo}`;
+  if (!code) {
+    // error_subcode=cancel
+    log.warn(`unable to exchange token: no code provided. error=${error}, error_subcode=${subcode}`);
+    if (subcode === 'cancel' || error === 'consent_required') {
+      return new Response('', {
+        status: 302,
+        headers: {
+          'cache-control': 'no-store, private, must-revalidate',
+          location,
+        },
+      });
+    } else {
+      return new Response('', {
+        status: 401,
+      });
+    }
+  }
+
   const discovery = await idp.discovery(info.tenantId);
   const url = new URL(discovery.token_endpoint);
   const client = idp.client(ctx);
   const body = {
     client_id: client.clientId,
     client_secret: client.clientSecret,
-    code: data.code,
+    code,
     grant_type: 'authorization_code',
     redirect_uri: info.links.token,
   };
@@ -155,9 +179,7 @@ export async function exchangeToken(ctx, info, idp) {
     });
   }
 
-  const location = `${info.links.connect}/${data.state.owner}/${data.state.repo}`;
   log.info('redirect back to', location);
-
   return new Response('', {
     status: 302,
     headers: {

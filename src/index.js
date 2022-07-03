@@ -259,6 +259,37 @@ async function serveStatic(path) {
   });
 }
 
+async function testReadAccessGoogle(ctx, info, client) {
+  const { log } = ctx;
+  try {
+    const ancestors = await client.getItemsFromId(info.mp.id, []);
+    if (ancestors.length > 0) {
+      log.info(`access validated. user can access ${ancestors[0].id}`);
+      return '';
+    }
+    return 'Unable to validate access: Sharelink invalid or not authorized.';
+  } catch (e) {
+    log.warn('unable to resolve sharelink', e);
+    return `Unable to validate access: ${e.message}`;
+  }
+}
+
+async function testReadAccessOnedrive(ctx, info, client) {
+  const { log } = ctx;
+  try {
+    const root = await client.resolveShareLink(info.mp.url);
+    log.info(`access validated. user can access ${root.webUrl}`);
+  } catch (e) {
+    log.warn('unable to resolve sharelink', e);
+    if (e.details.code === 'accessDenied') {
+      return `Not authorized to access underlying data source. Please make sure that the enterprise application: "Helix Service (${client.auth.clientId})" is consented for the required scopes.`;
+    } else {
+      return `Unable to validate access: ${e.message}`;
+    }
+  }
+  return '';
+}
+
 /**
  * Tests if the `authInfo` user has access to the share url.
  * we might want to check for the `/.helix/config.xlsx` in the future
@@ -278,17 +309,7 @@ async function authorizeAccess(ctx, info) {
       scope: GOOGLE_SCOPES.join(' '),
       access_token: info.authInfo.accessToken,
     });
-    try {
-      const ancestors = await gc.getItemsFromId(info.mp.id, []);
-      if (ancestors.length > 0) {
-        log.info(`access validated. user can access ${ancestors[0].id}`);
-        return '';
-      }
-      return 'Unable to validate access: Sharelink invalid or not authorized.';
-    } catch (e) {
-      log.warn('unable to resolve sharelink', e);
-      return `Unable to validate access: ${e.message}`;
-    }
+    return testReadAccessGoogle(ctx, info, gc);
   } else {
     const {
       AZURE_WORD2MD_CLIENT_ID: clientId,
@@ -305,19 +326,7 @@ async function authorizeAccess(ctx, info) {
       auth,
       noShareLinkCache: true,
     });
-
-    try {
-      const root = await od.resolveShareLink(info.mp.url);
-      log.info(`access validated. user can access ${root.webUrl}`);
-    } catch (e) {
-      log.warn('unable to resolve sharelink', e);
-      if (e.details.code === 'accessDenied') {
-        return `Not authorized to access underlying data source. Please make sure that the enterprise application: "Helix Service (${clientId})" is consented for the required scopes.`;
-      } else {
-        return `Unable to validate access: ${e.message}`;
-      }
-    }
-    return '';
+    return testReadAccessOnedrive(ctx, info, od);
   }
 }
 
@@ -386,6 +395,17 @@ async function run(request, context) {
       user: usr,
     });
     info.tenantId = tid;
+
+    if (!code) {
+      log.warn('unable to acquire token: no code parameter provided.');
+      return new Response('', {
+        status: 302,
+        headers: {
+          location: `${getRedirectRoot(request, context)}/connect/${own}/${rep}/${usr}`,
+        },
+      });
+    }
+
     if (!info.error) {
       try {
         if (type === 'connect' && idp === 'onedrive') {
@@ -494,7 +514,7 @@ async function run(request, context) {
             scopes: AZURE_SCOPES,
             redirectUri: getRedirectUrl(request, context, '/token'),
             responseMode: 'form_post',
-            prompt: 'consent',
+            prompt: 'select_account',
             state,
           });
           if (user) {
@@ -509,6 +529,11 @@ async function run(request, context) {
                 idp: authResult.idTokenClaims.idp,
                 iss: authResult.idTokenClaims.iss,
               };
+              const client = new OneDrive({
+                auth: od,
+                noShareLinkCache: true,
+              });
+              info.testReadAccess = await testReadAccessOnedrive(context, info, client);
             } else {
               log.info('not authenticated');
             }
@@ -534,6 +559,7 @@ async function run(request, context) {
                 iss: '',
                 scopes: GOOGLE_SCOPES,
               };
+              info.testReadAccess = await testReadAccessGoogle(context, info, googleClient);
             } catch (e) {
               // ignore
               log.info(`error reading user profile: ${e.message}`);
