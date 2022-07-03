@@ -338,14 +338,33 @@ describe('Index Tests (google)', () => {
       .delete('/853bced1f82a05e9d27a8f63ecac59e70d9c14680dc5e417429f65e988f/.helix-auth/auth-google-user.json?x-id=DeleteObject')
       .reply(201);
 
+    const idToken = await mockAuth('1vjng4ahZWph-9oeaMae16P9Kbb3xg4Cg');
     const resp = await main(DEFAULT_REQUEST({
       method: 'POST',
+      headers: {
+        host: 'localhost:3000',
+        cookie: `auth_token=idp_name=test&id_token=${idToken}&access_token=dummy-access-token`,
+      },
     }), DEFAULT_CONTEXT('/register/disconnect/owner/repo/user', {
       GOOGLE_HELIX_CLIENT_ID: 'client-id',
       GOOGLE_HELIX_CLIENT_SECRET: 'client-secret',
     }));
 
     assert.strictEqual(resp.status, 200);
+  });
+
+  it('google disconnect fails w/o auth', async () => {
+    nock.fstab(FSTAB_GD, 'owner', 'repo', 'main');
+    const resp = await main(DEFAULT_REQUEST({
+      method: 'POST',
+      headers: {
+        host: 'localhost:3000',
+      },
+    }), DEFAULT_CONTEXT('/register/disconnect/owner/repo/user', {
+      GOOGLE_HELIX_CLIENT_ID: 'client-id',
+      GOOGLE_HELIX_CLIENT_SECRET: 'client-secret',
+    }));
+    assert.strictEqual(resp.status, 401);
   });
 
   it.skip('google mountpoint renders connected', async () => {

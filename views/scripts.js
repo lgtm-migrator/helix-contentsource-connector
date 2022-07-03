@@ -184,6 +184,7 @@ async function disconnect(evt) {
   }
   // eslint-disable-next-line no-param-reassign
   evt.target.disabled = true;
+  showLoading(true);
   try {
     const [owner, repo, user] = info.split('/');
     const url = `${links.disconnect}/${owner}/${repo}/${user}`;
@@ -198,6 +199,7 @@ async function disconnect(evt) {
   } finally {
     // eslint-disable-next-line no-param-reassign
     evt.target.disabled = false;
+    showLoading(false);
   }
 }
 

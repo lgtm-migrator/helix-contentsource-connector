@@ -299,6 +299,10 @@ async function testReadAccessOnedrive(ctx, info, client) {
  */
 async function authorizeAccess(ctx, info) {
   const { log, env } = ctx;
+  if (!info.authInfo?.accessToken) {
+    return 'no access_token provided';
+  }
+
   if (info.mp.type === 'google') {
     const gc = await new GoogleClient({
       log,
@@ -450,6 +454,16 @@ async function run(request, context) {
       repo,
       user,
     });
+
+    info.authInfo = await getAuthInfoFromCookie(request, context, info);
+    const authError = await authorizeAccess(context, info);
+    if (authError) {
+      log.warn('unable to disconnect:', authError);
+      return new Response('', {
+        status: 401,
+      });
+    }
+
     if (!info.error) {
       try {
         if (info.mp.type === 'onedrive') {
