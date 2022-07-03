@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.77...v1.1.0) (2022-07-03)
+
+
+### Features
+
+* allow to specify different user types ([568b859](https://github.com/adobe/helix-contentsource-connector/commit/568b859167985f901b25b8357fb2492e5868d475))
+
 ## [1.0.77](https://github.com/adobe/helix-contentsource-connector/compare/v1.0.76...v1.0.77) (2022-07-02)
 
 
