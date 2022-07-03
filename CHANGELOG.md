@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/adobe/helix-contentsource-connector/compare/v1.1.1...v1.2.0) (2022-07-03)
+
+
+### Features
+
+* validate access ([cb592e7](https://github.com/adobe/helix-contentsource-connector/commit/cb592e7a4c2c3fa671001520f55241966d414cd3))
+
 ## [1.1.1](https://github.com/adobe/helix-contentsource-connector/compare/v1.1.0...v1.1.1) (2022-07-03)
 
 
