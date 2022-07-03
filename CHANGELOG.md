@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/adobe/helix-contentsource-connector/compare/v1.2.0...v1.3.0) (2022-07-03)
+
+
+### Features
+
+* auth disconnect ([1ba71cd](https://github.com/adobe/helix-contentsource-connector/commit/1ba71cdbe5ce463b025ced2ad96cfddaf9f70010))
+
 # [1.2.0](https://github.com/adobe/helix-contentsource-connector/compare/v1.1.1...v1.2.0) (2022-07-03)
 
 
