@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/adobe/helix-contentsource-connector/compare/v1.3.0...v1.4.0) (2022-07-03)
+
+
+### Features
+
+* rename ([f3cdf41](https://github.com/adobe/helix-contentsource-connector/commit/f3cdf414d2628cbd7a4b58f498a4bad696901b1f))
+
 # [1.3.0](https://github.com/adobe/helix-contentsource-connector/compare/v1.2.0...v1.3.0) (2022-07-03)
 
 
