@@ -9,20 +9,9 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+import idpFakeTestIDP from './fixtures/test-idp.js';
+import { IDPS } from '../src/login.js';
 
-/* eslint-env mocha */
+IDPS.test = idpFakeTestIDP;
 
-import assert from 'assert';
-import { encrypt, decrypt } from '../src/encrypt.js';
-
-describe('Encrypt Tests', () => {
-  it('encrypts and decrypts data', async () => {
-    const text = 'Hello, world.';
-    const key = '12345678';
-
-    const encrypted = encrypt(key, Buffer.from(text, 'utf-8'));
-    const decrypted = decrypt(key, encrypted);
-
-    assert.strictEqual(decrypted.toString('utf-8'), text);
-  });
-});
+await idpFakeTestIDP.discovery();

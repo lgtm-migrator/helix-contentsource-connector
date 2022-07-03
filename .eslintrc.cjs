@@ -16,16 +16,17 @@ module.exports = {
   env: {
     node: true,
     es6: true,
+    es2022: true,
   },
   parserOptions: {
     sourceType: 'module',
-    ecmaVersion: 2020,
+    ecmaVersion: 2022,
   },
   rules: {
     'import/extensions': 0,
     'import/prefer-default-export': 0,
   },
   globals: {
-    "__rootdir": true,
+    __rootdir: true,
   },
 };
