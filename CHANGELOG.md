@@ -1,3 +1,10 @@
+## [1.4.5](https://github.com/adobe/helix-contentsource-connector/compare/v1.4.4...v1.4.5) (2022-07-05)
+
+
+### Bug Fixes
+
+* use tenant from mounpoint ([#159](https://github.com/adobe/helix-contentsource-connector/issues/159)) ([cb5b77f](https://github.com/adobe/helix-contentsource-connector/commit/cb5b77fc9f27a99d02e486b9f0de3d7468276b22))
+
 ## [1.4.4](https://github.com/adobe/helix-contentsource-connector/compare/v1.4.3...v1.4.4) (2022-07-05)
 
 
