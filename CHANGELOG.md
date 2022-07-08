@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/adobe/helix-contentsource-connector/compare/v1.4.5...v1.5.0) (2022-07-08)
+
+
+### Features
+
+* improve message ([5e01c4b](https://github.com/adobe/helix-contentsource-connector/commit/5e01c4b4ba1dfe3383a73fa0698ca46c0817b97e))
+
 ## [1.4.5](https://github.com/adobe/helix-contentsource-connector/compare/v1.4.4...v1.4.5) (2022-07-05)
 
 
