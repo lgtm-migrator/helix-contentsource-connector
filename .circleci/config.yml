@@ -1,12 +1,12 @@
 version: 2.1
 executors:
-  node14:
+  node16:
     docker:
-      - image: cimg/node:14.19
-    working_directory: ~/repo
+      - image: cimg/node:16.16
 
 orbs:
   helix-post-deploy: adobe/helix-post-deploy@3.0.0
+  codecov: codecov/codecov@3.2.3
 
 commands:
   setup:
@@ -15,9 +15,6 @@ commands:
       - restore_cache:
           keys:
             - v3-dependencies-{{ arch }}-{{ checksum "package-lock.json" }}
-      - run:
-          name: install latest npm
-          command: npm -g install npm
       - run:
           name: Installing Dependencies
           command: npm ci
@@ -32,7 +29,7 @@ commands:
 
 jobs:
   build:
-    executor: node14
+    executor: node16
     steps:
       - setup
       - run: mkdir junit
@@ -41,14 +38,15 @@ jobs:
           command: npm run lint
       - run:
           name: Getting Code Coverage
-          command: npm run test-ci
+          command: npm run test
+      - codecov/upload
       - store_test_results:
           path: junit
       - store_artifacts:
           path: junit
 
   semantic-release:
-    executor: node14
+    executor: node16
     steps:
       - setup
       - run:
@@ -68,7 +66,7 @@ jobs:
           incubator: true # remove only when promoting service to production
 
   branch-deploy:
-    executor: node14
+    executor: node16
     steps:
       - setup
       - run:
