@@ -1,3 +1,10 @@
+## [1.5.13](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.12...v1.5.13) (2022-08-13)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @aws-sdk/client-s3 to v3.145.0 ([989b480](https://github.com/adobe/helix-contentsource-connector/commit/989b4805ce35e8483344198181e0ceccbb220904))
+
 ## [1.5.12](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.11...v1.5.12) (2022-08-12)
 
 
