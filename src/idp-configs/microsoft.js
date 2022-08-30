@@ -13,8 +13,8 @@ export default {
   name: 'microsoft',
   mountType: 'onedrive',
   client: (ctx) => ({
-    clientId: ctx.env.AZURE_WORD2MD_CLIENT_ID,
-    clientSecret: ctx.env.AZURE_WORD2MD_CLIENT_SECRET,
+    clientId: ctx.env.AZURE_HELIX_SERVICE_CLIENT_ID,
+    clientSecret: ctx.env.AZURE_HELIX_SERVICE_CLIENT_SECRET,
   }),
   scope: [
     'openid',

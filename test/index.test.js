@@ -156,8 +156,8 @@ describe('Index Tests', () => {
       .reply(404);
 
     const resp = await main(DEFAULT_REQUEST(), DEFAULT_CONTEXT('/register/info/owner/repo/user', {
-      AZURE_WORD2MD_CLIENT_ID: 'client-id',
-      AZURE_WORD2MD_CLIENT_SECRET: 'client-secret',
+      AZURE_HELIX_SERVICE_CLIENT_ID: 'client-id',
+      AZURE_HELIX_SERVICE_CLIENT_SECRET: 'client-secret',
     }));
     assert.strictEqual(resp.status, 200);
     const body = await resp.json();
@@ -410,8 +410,8 @@ describe('Index Tests (google)', () => {
       });
 
     const resp = await main(DEFAULT_REQUEST(), DEFAULT_CONTEXT('/register/info/owner/repo/user', {
-      GOOGLE_DOCS2MD_CLIENT_ID: 'client-id',
-      GOOGLE_DOCS2MD_CLIENT_SECRET: 'client-secret',
+      GOOGLE_HELIX_SERVICE_CLIENT_ID: 'client-id',
+      GOOGLE_HELIX_SERVICE_CLIENT_SECRET: 'client-secret',
     }));
     assert.strictEqual(resp.status, 200);
     const body = await resp.json();
@@ -497,8 +497,8 @@ describe.skip('Index Tests (sharepoint)', () => {
       `);
 
     const resp = await main(DEFAULT_REQUEST(), DEFAULT_CONTEXT('/register/info/owner/repo', {
-      AZURE_WORD2MD_CLIENT_ID: 'client-id',
-      AZURE_WORD2MD_CLIENT_SECRET: 'client-secret',
+      AZURE_HELIX_SERVICE_CLIENT_ID: 'client-id',
+      AZURE_HELIX_SERVICE_CLIENT_SECRET: 'client-secret',
     }));
     assert.strictEqual(resp.status, 200);
     const body = await resp.json();
@@ -529,8 +529,8 @@ describe.skip('Index Tests (sharepoint)', () => {
       `);
 
     const resp = await main(DEFAULT_REQUEST(), DEFAULT_CONTEXT('/register/info/default/onedrive', {
-      AZURE_WORD2MD_CLIENT_ID: 'client-id',
-      AZURE_WORD2MD_CLIENT_SECRET: 'client-secret',
+      AZURE_HELIX_SERVICE_CLIENT_ID: 'client-id',
+      AZURE_HELIX_SERVICE_CLIENT_SECRET: 'client-secret',
     }));
     assert.strictEqual(resp.status, 200);
     const body = await resp.json();
@@ -574,8 +574,8 @@ describe.skip('Index Tests (sharepoint)', () => {
         'content-type': 'application/x-www-form-urlencoded',
       },
     }), DEFAULT_CONTEXT('/register/token', {
-      AZURE_WORD2MD_CLIENT_ID: 'client-id',
-      AZURE_WORD2MD_CLIENT_SECRET: 'client-secret',
+      AZURE_HELIX_SERVICE_CLIENT_ID: 'client-id',
+      AZURE_HELIX_SERVICE_CLIENT_SECRET: 'client-secret',
     }));
 
     assert.strictEqual(resp.status, 302);
@@ -631,8 +631,8 @@ describe.skip('Index Tests (sharepoint)', () => {
     const resp = await main(DEFAULT_REQUEST({
       method: 'POST',
     }), DEFAULT_CONTEXT('/register/disconnect/owner/repo/user', {
-      AZURE_WORD2MD_CLIENT_ID: 'client-id',
-      AZURE_WORD2MD_CLIENT_SECRET: 'client-secret',
+      AZURE_HELIX_SERVICE_CLIENT_ID: 'client-id',
+      AZURE_HELIX_SERVICE_CLIENT_SECRET: 'client-secret',
     }));
 
     assert.strictEqual(resp.status, 200);
@@ -675,8 +675,8 @@ describe.skip('Index Tests (sharepoint)', () => {
       });
 
     const resp = await main(DEFAULT_REQUEST(), DEFAULT_CONTEXT('/register/info/owner/repo/user', {
-      AZURE_WORD2MD_CLIENT_ID: '83ab2922-5f11-4e4d-96f3-d1e0ff152856',
-      AZURE_WORD2MD_CLIENT_SECRET: 'client-secret',
+      AZURE_HELIX_SERVICE_CLIENT_ID: '83ab2922-5f11-4e4d-96f3-d1e0ff152856',
+      AZURE_HELIX_SERVICE_CLIENT_SECRET: 'client-secret',
     }));
     assert.strictEqual(resp.status, 200);
     const body = await resp.json();

@@ -21,8 +21,8 @@ export default {
   ].join(' '),
   mountType: 'google',
   client: (ctx) => ({
-    clientId: ctx.env.GOOGLE_DOCS2MD_CLIENT_ID,
-    clientSecret: ctx.env.GOOGLE_DOCS2MD_CLIENT_SECRET,
+    clientId: ctx.env.GOOGLE_HELIX_SERVICE_CLIENT_ID,
+    clientSecret: ctx.env.GOOGLE_HELIX_SERVICE_CLIENT_SECRET,
   }),
   discoveryUrl: 'https://accounts.google.com/.well-known/openid-configuration',
   loginPrompt: 'select_account',

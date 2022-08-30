@@ -109,8 +109,8 @@ async function getOneDriveClient(context, opts) {
   if (!context.od) {
     const { log, env } = context;
     const {
-      AZURE_WORD2MD_CLIENT_ID: clientId,
-      AZURE_WORD2MD_CLIENT_SECRET: clientSecret,
+      AZURE_HELIX_SERVICE_CLIENT_ID: clientId,
+      AZURE_HELIX_SERVICE_CLIENT_SECRET: clientSecret,
     } = env;
     const cachePlugin = await getCachePlugin(context, opts);
 
@@ -138,8 +138,8 @@ async function getGoogleClient(req, context, opts) {
 
     context.gc = await new GoogleClient({
       log,
-      clientId: env.GOOGLE_DOCS2MD_CLIENT_ID,
-      clientSecret: env.GOOGLE_DOCS2MD_CLIENT_SECRET,
+      clientId: env.GOOGLE_HELIX_SERVICE_CLIENT_ID,
+      clientSecret: env.GOOGLE_HELIX_SERVICE_CLIENT_SECRET,
       redirectUri: getRedirectUrl(req, context, '/token'),
       cachePlugin,
     }).init();
@@ -302,8 +302,8 @@ async function authorizeAccess(ctx, info) {
   if (info.mp.type === 'google') {
     const gc = await new GoogleClient({
       log,
-      clientId: env.GOOGLE_DOCS2MD_CLIENT_ID,
-      clientSecret: env.GOOGLE_DOCS2MD_CLIENT_SECRET,
+      clientId: env.GOOGLE_HELIX_SERVICE_CLIENT_ID,
+      clientSecret: env.GOOGLE_HELIX_SERVICE_CLIENT_SECRET,
     }).init();
     await gc.setCredentials({
       scope: GOOGLE_SCOPES.join(' '),
@@ -312,8 +312,8 @@ async function authorizeAccess(ctx, info) {
     return testReadAccessGoogle(ctx, info, gc);
   } else {
     const {
-      AZURE_WORD2MD_CLIENT_ID: clientId,
-      AZURE_WORD2MD_CLIENT_SECRET: clientSecret,
+      AZURE_HELIX_SERVICE_CLIENT_ID: clientId,
+      AZURE_HELIX_SERVICE_CLIENT_SECRET: clientSecret,
     } = env;
     const auth = new OneDriveAuth({
       log,
