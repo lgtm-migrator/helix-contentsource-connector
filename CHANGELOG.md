@@ -1,3 +1,10 @@
+## [1.5.20](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.19...v1.5.20) (2022-08-30)
+
+
+### Bug Fixes
+
+* cleanup oauth secrets ([#190](https://github.com/adobe/helix-contentsource-connector/issues/190)) ([ca6fe02](https://github.com/adobe/helix-contentsource-connector/commit/ca6fe024dc9faa0d4d7e7f9464d63b9e7f69728a))
+
 ## [1.5.19](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.18...v1.5.19) (2022-08-29)
 
 
