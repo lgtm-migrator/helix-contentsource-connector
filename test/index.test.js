@@ -14,7 +14,7 @@
 
 import assert from 'assert';
 import { encode } from 'querystring';
-import { Request } from '@adobe/helix-fetch';
+import { Request } from '@adobe/fetch';
 import { S3CachePlugin, MemCachePlugin } from '@adobe/helix-onedrive-support';
 import { SignJWT, UnsecuredJWT } from 'jose';
 import { Nock, filterProperties } from './utils.js';
