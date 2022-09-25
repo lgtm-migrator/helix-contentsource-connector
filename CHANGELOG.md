@@ -1,3 +1,10 @@
+## [1.5.29](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.28...v1.5.29) (2022-09-25)
+
+
+### Bug Fixes
+
+* @adobe/helix-fetch -> @adobe/fetch ([cd5e93e](https://github.com/adobe/helix-contentsource-connector/commit/cd5e93e6935b21fc6613473837b81c262ed9c11b))
+
 ## [1.5.28](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.27...v1.5.28) (2022-09-25)
 
 
