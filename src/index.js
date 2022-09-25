@@ -23,7 +23,7 @@ import wrap from '@adobe/helix-shared-wrap';
 import bodyData from '@adobe/helix-shared-body-data';
 import { logger } from '@adobe/helix-universal-logger';
 import { wrap as status } from '@adobe/helix-status';
-import { Response } from '@adobe/helix-fetch';
+import { Response } from '@adobe/fetch';
 import { decodeJwt, UnsecuredJWT } from 'jose';
 import pkgJson from './package.cjs';
 import fetchFstab from './fetch-fstab.js';

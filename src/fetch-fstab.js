@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import { context, h1 } from '@adobe/helix-fetch';
+import { context, h1 } from '@adobe/fetch';
 import { logLevelForStatusCode, propagateStatusCode } from '@adobe/helix-shared-utils';
 import { MountConfig } from '@adobe/helix-shared-config';
 import fetchS3 from './fetch-s3.js';

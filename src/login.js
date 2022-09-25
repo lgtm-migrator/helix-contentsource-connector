@@ -14,7 +14,7 @@ import {
   createLocalJWKSet, createRemoteJWKSet, errors, jwtVerify, UnsecuredJWT,
 } from 'jose';
 import crypto from 'crypto';
-import { context, h1, Response } from '@adobe/helix-fetch';
+import { context, h1, Response } from '@adobe/fetch';
 import { clearAuthCookie, getAuthCookie, setAuthCookie } from './auth-cookie.js';
 import idpGoogle from './idp-configs/google.js';
 import idpMicrosoft from './idp-configs/microsoft.js';
