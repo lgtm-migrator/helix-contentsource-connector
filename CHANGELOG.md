@@ -1,3 +1,10 @@
+## [1.5.34](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.33...v1.5.34) (2022-09-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-google-support to v2.0.12 ([ac2fcad](https://github.com/adobe/helix-contentsource-connector/commit/ac2fcade820e98c7fe7da997a1238116d328fc86))
+
 ## [1.5.33](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.32...v1.5.33) (2022-09-29)
 
 
