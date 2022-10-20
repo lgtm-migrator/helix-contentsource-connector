@@ -278,7 +278,7 @@ async function testReadAccessOnedrive(ctx, info, client) {
   } catch (e) {
     log.warn('unable to resolve sharelink', e);
     if (e.details.code === 'accessDenied') {
-      return `The resource specified in the fstab.yaml does either not exist, or you do not have permission to access it. Please make sure that the url is correct, the enterprise application: "Helix Service (${client.auth.clientId})" is consented for the required scopes, and that the logged in user has permissions to access it.`;
+      return `The resource specified in the fstab.yaml does either not exist, or you do not have permission to access it. Please make sure that the url is correct, the enterprise application: "Franklin Service (${client.auth.clientId})" is consented for the required scopes, and that the logged in user has permissions to access it.`;
     } else {
       return `Unable to validate access: ${e.message}`;
     }
