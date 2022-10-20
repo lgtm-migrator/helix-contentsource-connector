@@ -1,3 +1,10 @@
+## [1.5.47](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.46...v1.5.47) (2022-10-20)
+
+
+### Bug Fixes
+
+* rename helix ([#227](https://github.com/adobe/helix-contentsource-connector/issues/227)) ([342a7b7](https://github.com/adobe/helix-contentsource-connector/commit/342a7b75c9269ec5187c76f680fff15482ad8cd7))
+
 ## [1.5.46](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.45...v1.5.46) (2022-10-15)
 
 
