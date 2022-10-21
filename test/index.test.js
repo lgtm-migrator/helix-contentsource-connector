@@ -189,7 +189,7 @@ describe('Index Tests (google)', () => {
 
   async function mockAuth(id = '1vjng4ahZWph-9oeaMae16P9Kbb3xg4Cg') {
     nock('https://www.googleapis.com')
-      .get(`/drive/v3/files/${id}?fields=name%2Cparents%2CmimeType%2CmodifiedTime`)
+      .get(`/drive/v3/files/${id}?fields=name%2Cparents%2CmimeType%2CmodifiedTime&supportsAllDrives=true`)
       .reply(200, {
         files: [{
           mimeType: 'application/xml',
