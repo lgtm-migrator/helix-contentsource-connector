@@ -62,11 +62,11 @@
     "@adobe/helix-shared-wrap": "1.0.5",
     "@adobe/helix-status": "9.2.17",
     "@adobe/helix-universal-logger": "2.0.15",
-    "@aws-sdk/client-s3": "3.188.0",
+    "@aws-sdk/client-s3": "3.194.0",
     "cookie": "0.5.0",
     "ejs": "3.1.8",
     "googleapis": "108.0.0",
-    "jose": "4.10.0",
+    "jose": "4.10.3",
     "mime": "3.0.0"
   },
   "devDependencies": {
@@ -80,7 +80,7 @@
     "chai": "4.3.6",
     "chai-http": "4.3.0",
     "dotenv": "16.0.3",
-    "eslint": "8.25.0",
+    "eslint": "8.26.0",
     "eslint-plugin-header": "3.1.1",
     "eslint-plugin-import": "2.26.0",
     "husky": "8.0.1",
