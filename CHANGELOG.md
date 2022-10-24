@@ -1,3 +1,10 @@
+## [1.5.51](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.50...v1.5.51) (2022-10-24)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-google-support to v2.0.19 ([#231](https://github.com/adobe/helix-contentsource-connector/issues/231)) ([d42353b](https://github.com/adobe/helix-contentsource-connector/commit/d42353b0b3adb306408327b35509e92ddceb6108))
+
 ## [1.5.50](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.49...v1.5.50) (2022-10-22)
 
 
