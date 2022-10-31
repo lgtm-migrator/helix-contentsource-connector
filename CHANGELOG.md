@@ -1,3 +1,10 @@
+## [1.5.54](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.53...v1.5.54) (2022-10-31)
+
+
+### Bug Fixes
+
+* **deps:** update dependency googleapis to v109 ([#236](https://github.com/adobe/helix-contentsource-connector/issues/236)) ([c06f8a2](https://github.com/adobe/helix-contentsource-connector/commit/c06f8a2202949add77d5df8fbe5da9fefb38b4d0))
+
 ## [1.5.53](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.52...v1.5.53) (2022-10-29)
 
 
