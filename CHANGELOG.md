@@ -1,3 +1,10 @@
+## [1.5.56](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.55...v1.5.56) (2022-11-01)
+
+
+### Bug Fixes
+
+* **deps:** update dependency @adobe/helix-onedrive-support to v8.4.0 ([#238](https://github.com/adobe/helix-contentsource-connector/issues/238)) ([146850b](https://github.com/adobe/helix-contentsource-connector/commit/146850b04e56196326d0c9cdf9d8393db774bb44))
+
 ## [1.5.55](https://github.com/adobe/helix-contentsource-connector/compare/v1.5.54...v1.5.55) (2022-10-31)
 
 
